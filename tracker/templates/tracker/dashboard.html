@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <!-- Center-aligned heading -->
+      <h2 class="mb-4 text-center">Monthly Expense Summary</h2>
+
+      <!-- Expense Summary Table -->
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Month</th>
+            <th>Total Expenses (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for month, total in zipped_data %}
+          <tr>
+            <td>{{ month }}</td>
+            <td>₹{{ total }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="2">No data available for this period.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Buttons Section -->
+
+      <div class="mt-4 d-flex flex-wrap gap-3">
+        <!-- Add New Expense -->
+        <a href="{% url 'add_expense' %}" class="btn btn-warning"
+          >Add Expense</a
+        >
+
+        <!-- Redirect to All Expenses -->
+        <button type="button" id="redirectBtn" class="btn btn-primary">
+          Go to All Expenses
+        </button>
+
+        <!-- Download CSV Button -->
+        <a href="{% url 'export_csv' %}" class="btn btn-success"
+          >Download CSV</a
+        >
+      </div>
+    </div>
+
+    <script>
+      // Redirect to the list of expenses when the button is clicked
+      document
+        .getElementById("redirectBtn")
+        .addEventListener("click", function () {
+          window.location.href = "{% url 'list_expenses' %}";
+        });
+    </script>
+  </body>
+</html>
